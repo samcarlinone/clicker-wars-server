@@ -13,24 +13,24 @@ exports.signin = function(req, res, next) {
 }
 
 exports.signup = function(req, res, next) {
-  const email = req.body.email;
+  const name = req.body.name;
   const password = req.body.password;
 
-  if(!email || !password) {
-    return res.status(422).send({error: 'You must provide email + password'});
+  if(!name || !password) {
+    return res.status(422).send({error: 'You must provide name + password'});
   }
 
-  User.findOne({email}, function(err, existingUser) {
+  User.findOne({name}, function(err, existingUser) {
     if(err) {
       return next(err);
     }
 
     if(existingUser) {
-      return res.status(422).send({error: 'Email is in use'});
+      return res.status(422).send({error: 'Name is in use'});
     }
 
     const user = new User({
-      email,
+      name,
       password
     });
 
